@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seamen - The Daily Dive 🐟</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐟</text></svg>">
+</head>
+<body>
+  <div class="ocean-bg" id="ocean-bg"></div>
+  <div class="bubbles" id="bubbles"></div>
+
+  <div id="game-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="pervy-badge">PERVY MODE</div>
+      <div class="logo">
+        <span class="k">S</span><span class="r">E</span><span class="i">A</span><span class="l">M</span><span class="n">E</span><span class="n">N</span>
+      </div>
+      <div class="header-controls">
+        <button class="icon-btn" id="menu-btn" aria-label="Open menu">☰</button>
+        <button class="icon-btn" id="settings-btn" aria-label="Settings">⚙</button>
+      </div>
+    </header>
+
+    <!-- Depth Gauge -->
+    <div class="depth-gauge">
+      <div class="depth-value" id="depth-value">0m</div>
+      <div class="depth-label" id="depth-label">SURFACE</div>
+      <div class="depth-bar">
+        <div class="depth-bar-fill surface" id="depth-bar-fill"></div>
+      </div>
+      <div class="depth-indicator">
+        <span>0m</span>
+        <span id="max-depth">332m</span>
+      </div>
+    </div>
+
+    <!-- Score Panel -->
+    <div class="score-panel">
+      <div class="score-item">
+        <div class="label">SCORE</div>
+        <div class="value" id="score-value">0</div>
+      </div>
+      <div class="score-item">
+        <div class="label">PROMPTS</div>
+        <div class="value" id="prompts-value">0/7</div>
+      </div>
+      <div class="score-item">
+        <div class="label">RARITY</div>
+        <div class="value" id="rarity-value">—</div>
+      </div>
+    </div>
+
+    <!-- Zone Label -->
+    <div class="zone-label" id="zone-label">
+      <span class="zone-name" id="zone-name">SURFACE</span>
+      <span class="zone-depth" id="zone-depth">— sunlight reaches the surface —</span>
+    </div>
+
+    <!-- Main Content Area -->
+    <div id="main-content">
+      <!-- Friend / Companion -->
+      <div class="friend" id="friend">
+        <img id="friend-img" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐟</text></svg>" alt="Companion">
+        <div class="message" id="friend-message">Ahoy there, sailor... ready to sink some depths? 💦</div>
+      </div>
+
+      <!-- Begin Descent Button (Start Screen) -->
+      <div class="begin-screen" id="begin-screen">
+        <button class="begin-btn" id="begin-btn">▼ BEGIN DESCENT ▼</button>
+        <div class="how-to-play" id="how-to-play">
+          <div class="toggle" id="how-to-toggle">▸ how to play (not that kind of play)</div>
+          <div class="steps">
+            <div class="step">Answer 7 prompts per dive</div>
+            <div class="step">25 seconds per prompt</div>
+            <div class="step">Rarer answers sink deeper (and get wetter)</div>
+            <div class="step">Reach the Hadal Zone for max... satisfaction</div>
+            <div class="step">Daily dive resets at midnight (like your stamina)</div>
+          </div>
+        </div>
+        <div class="footer">
+          <a href="#" id="archive-link">ARCHIVE ⟲</a> · <a href="#" id="packs-link">THEMED PACKS</a> · <a href="#" id="unlimited-link">UNLIMITED ∞</a>
+        </div>
+      </div>
+
+      <!-- Prompt Card (During Dive) -->
+      <div class="prompt-card" id="prompt-card" style="display: none;">
+        <div class="prompt-number" id="prompt-number">PROMPT 1 OF 7</div>
+        <div class="prompt-text" id="prompt-text">Loading...</div>
+        <div class="options" id="options"></div>
+      </div>
+
+      <!-- Timer (During Dive) -->
+      <div class="timer" id="timer" style="display: none;">25</div>
+
+      <!-- Dive Summary (After Dive) -->
+      <div class="dive-summary" id="dive-summary" style="display: none;">
+        <h3>DIVE COMPLETE 💦</h3>
+        <div class="final-depth" id="final-depth">0m</div>
+        <div class="stat">
+          <span class="label">Total Score: </span>
+          <span class="value" id="final-score">0</span>
+        </div>
+        <div class="stat">
+          <span class="label">Max Depth Reached: </span>
+          <span class="value" id="final-max-depth">0m</span>
+        </div>
+        <div class="stat">
+          <span class="label">Rarest Answer: </span>
+          <span class="value" id="final-rarity">—</span>
+        </div>
+        <div class="stat">
+          <span class="label">Zone: </span>
+          <span class="value" id="final-zone">SURFACE</span>
+        </div>
+        <button class="begin-btn" id="play-again-btn" style="margin-top: 20px;">DIVE AGAIN (you know you want to)</button>
+      </div>
+    </div>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menu-overlay">
+      <h2>SEAMEN</h2>
+      <a href="#" class="menu-item" data-action="daily">Daily Dive</a>
+      <a href="#" class="menu-item" data-action="unlimited">Unlimited ∞</a>
+      <a href="#" class="menu-item" data-action="archive">Archive</a>
+      <a href="#" class="menu-item" data-action="packs">Themed Packs</a>
+      <a href="#" class="menu-item" data-action="account">My Seamen</a>
+      <a href="#" class="menu-item" data-action="friends">Friends</a>
+      <a href="#" class="menu-item" data-action="settings">Settings</a>
+      <a href="#" class="menu-item" data-action="faq">FAQ</a>
+      <button class="menu-item" id="close-menu-btn">Close Menu</button>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="menu-overlay" id="settings-overlay" style="display: none;">
+      <h2>SETTINGS</h2>
+      <label class="menu-item" style="text-align: left; display: flex; align-items: center; justify-content: space-between;">
+        Sound
+        <input type="checkbox" id="sound-enabled" checked>
+      </label>
+      <label class="menu-item" style="text-align: left; display: flex; align-items: center; justify-content: space-between;">
+        Vibration ( ͡° ͜ʖ ͡°)
+        <input type="checkbox" id="vibration-enabled" checked>
+      </label>
+      <label class="menu-item" style="text-align: left; display: flex; align-items: center; justify-content: space-between;">
+        High Contrast
+        <input type="checkbox" id="high-contrast">
+      </label>
+      <label class="menu-item" style="text-align: left; display: flex; align-items: center; justify-content: space-between;">
+        Reduced Motion
+        <input type="checkbox" id="reduced-motion">
+      </label>
+      <button class="menu-item" id="close-settings-btn">Close Settings</button>
+    </div>
+
+    <!-- Wardrobe / Customization Modal -->
+    <div class="menu-overlay" id="wardrobe-overlay" style="display: none;">
+      <h2>WARDROBE</h2>
+      <div id="wardrobe-items"></div>
+      <button class="menu-item" id="close-wardrobe-btn">Close Wardrobe</button>
+    </div>
+  </div>
+
+  <script type="module" src="js/game.js"></script>
+</body>
+</html>
